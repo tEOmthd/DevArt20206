@@ -17,6 +17,7 @@ public class ButtonPress : MonoBehaviour
         }
     }
 }
+
 /*
 private bool lastPressed = false;
 
@@ -31,5 +32,6 @@ void Update()
         }
         lastPressed = primaryButtonPressed;
     }
-}*/
+}
+*/
 
