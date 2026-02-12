@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.XR;
 
 public class ButtonPress : MonoBehaviour
 {
@@ -7,21 +8,16 @@ public class ButtonPress : MonoBehaviour
     private bool lastPressed = false;
 
     void Update()
-{
-    bool primaryButtonPressed = false;
-    if (device.TryGetFeatureValue(CommonUsages.primaryButton, out primaryButtonPressed))
     {
-        if (primaryButtonPressed && !lastPressed)
+        InputDevice device = InputDevices.GetDeviceAtXRNode(XRNode.RightHand);
+        bool primaryButtonPressed = false;
+        if (device.TryGetFeatureValue(CommonUsages.primaryButton, out primaryButtonPressed))
         {
-            animator.SetTrigger("Press");
+            if (primaryButtonPressed && !lastPressed)
+            {
+                animator.SetTrigger("Press");
+            }
+            lastPressed = primaryButtonPressed;
         }
-        lastPressed = primaryButtonPressed;
     }
 }
-   
-}
-
-
-
-
-
