@@ -10,30 +10,21 @@ public class Door : MonoBehaviour
     private Quaternion _closedRotation;
     private Quaternion _openRotation;
     private Coroutine _currentCoroutine; 
-
     void Start()
     {
         _closedRotation = transform.rotation; 
         _openRotation = Quaternion.Euler(transform.eulerAngles + new Vector3(0, openAngle, 0));
     }
 
-    void Update()
-    {
-        // Garder E comme test direct
-        if (Input.GetKeyDown(KeyCode.E))
-        {
-            OpenDoor();  // maintenant via méthode publique
-        }
-    }
 
     // Méthode publique pour déclencher la porte depuis un autre script
-    public void OpenDoor()
-    {
-        if (_currentCoroutine != null)
-            StopCoroutine(_currentCoroutine);
-        _currentCoroutine = StartCoroutine(ToggleDoor());
-    }
-
+   public void OpenDoor()
+{
+    if (_currentCoroutine != null)
+        StopCoroutine(_currentCoroutine);
+    Debug.Log("Door activated");
+    _currentCoroutine = StartCoroutine(ToggleDoor());
+}
     private IEnumerator ToggleDoor()
     {
         Quaternion targetRotation = isOpen ? _closedRotation : _openRotation;
