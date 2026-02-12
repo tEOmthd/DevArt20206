@@ -706,7 +706,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Door
   openAngle: 90
   openSpeed: 2
-  isOpen: 0
 --- !u!1001 &192320191
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3051,24 +3050,18 @@ MonoBehaviour:
   leftHandTarget: {fileID: 441087508}
   rightHandTarget: {fileID: 441087507}
   head: {fileID: 1357138955}
-  spine: {fileID: 1357138956}
   leftUpperArm: {fileID: 1357138960}
   leftLowerArm: {fileID: 1357138961}
   leftHand: {fileID: 1357138962}
   rightUpperArm: {fileID: 1357138957}
   rightLowerArm: {fileID: 1357138958}
   rightHand: {fileID: 1357138959}
-  heightOffset: -1.6
+  bodyOffset: {x: 0, y: -1.6, z: 0}
   leftHandRotOffset: {x: 0, y: 0, z: 0}
   rightHandRotOffset: {x: 0, y: 0, z: 0}
 --- !u!4 &1357138955 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -3321919801592875672, guid: 51c4f1b39ca94e44db8509d34d09b170, type: 3}
-  m_PrefabInstance: {fileID: 1357138952}
-  m_PrefabAsset: {fileID: 0}
---- !u!4 &1357138956 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: -3480699329000672020, guid: 51c4f1b39ca94e44db8509d34d09b170, type: 3}
   m_PrefabInstance: {fileID: 1357138952}
   m_PrefabAsset: {fileID: 0}
 --- !u!4 &1357138957 stripped
