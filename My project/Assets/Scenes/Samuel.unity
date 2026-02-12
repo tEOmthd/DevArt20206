@@ -3673,6 +3673,14 @@ PrefabInstance:
       value: Franck
       objectReference: {fileID: 0}
     - target: {fileID: 5866666021909216657, guid: 51c4f1b39ca94e44db8509d34d09b170, type: 3}
+      propertyPath: m_Avatar
+      value: 
+      objectReference: {fileID: 9000000, guid: c25e49e3c511fe2498b5f09a15b598ca, type: 3}
+    - target: {fileID: 5866666021909216657, guid: 51c4f1b39ca94e44db8509d34d09b170, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5866666021909216657, guid: 51c4f1b39ca94e44db8509d34d09b170, type: 3}
       propertyPath: m_Controller
       value: 
       objectReference: {fileID: 9100000, guid: 421f9c1462bd51d498d181754519d6f4, type: 2}
@@ -3819,7 +3827,7 @@ MonoBehaviour:
     ikTarget: {fileID: 1963455877}
     trackingPositionOffset: {x: 0, y: 0, z: 0}
     trackingRotationOffset: {x: 0, y: 0, z: 0}
-  headBodyPositionOffset: {x: 0, y: 0, z: 0}
+  headBodyPositionOffset: {x: 0, y: -0.3, z: 0}
   headBodyYawOffset: 0
 --- !u!4 &1374007826 stripped
 Transform:
