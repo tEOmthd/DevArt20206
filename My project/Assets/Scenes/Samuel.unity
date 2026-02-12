@@ -706,7 +706,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Door
   openAngle: 90
   openSpeed: 2
-  isOpen: 0
 --- !u!1001 &192320191
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2779,19 +2778,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f9a1a5c1a73edba4e8a191866f65123e, type: 3}
---- !u!114 &1207521051
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1357138953}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e5574cdc0d4e5d947b1fbb8c793ec278, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::HideHead
-  headBone: {fileID: 1357138955}
 --- !u!1001 &1239347416
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3019,6 +3005,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Franck
       objectReference: {fileID: 0}
+    - target: {fileID: 5866666021909216657, guid: 51c4f1b39ca94e44db8509d34d09b170, type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: 421f9c1462bd51d498d181754519d6f4, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -3026,9 +3016,6 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 51c4f1b39ca94e44db8509d34d09b170, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1357138954}
-    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 51c4f1b39ca94e44db8509d34d09b170, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1207521051}
   m_SourcePrefab: {fileID: 100100000, guid: 51c4f1b39ca94e44db8509d34d09b170, type: 3}
 --- !u!1 &1357138953 stripped
 GameObject:
@@ -3044,63 +3031,18 @@ MonoBehaviour:
   m_GameObject: {fileID: 1357138953}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 910551d9a20055b489ee3e47190bbd2e, type: 3}
+  m_Script: {fileID: 11500000, guid: 6df1ebf2f7abbde478f75577c1e36f1e, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::VRIKBody
+  m_EditorClassIdentifier: Assembly-CSharp::VRAvatarIK
   headTarget: {fileID: 441087509}
   leftHandTarget: {fileID: 441087508}
   rightHandTarget: {fileID: 441087507}
-  head: {fileID: 1357138955}
-  spine: {fileID: 1357138956}
-  leftUpperArm: {fileID: 1357138960}
-  leftLowerArm: {fileID: 1357138961}
-  leftHand: {fileID: 1357138962}
-  rightUpperArm: {fileID: 1357138957}
-  rightLowerArm: {fileID: 1357138958}
-  rightHand: {fileID: 1357138959}
-  heightOffset: -1.6
+  turnSmoothness: 5
+  headOffset: {x: 0, y: 0, z: 0}
+  leftHandPosOffset: {x: 0, y: 0, z: 0}
   leftHandRotOffset: {x: 0, y: 0, z: 0}
+  rightHandPosOffset: {x: 0, y: 0, z: 0}
   rightHandRotOffset: {x: 0, y: 0, z: 0}
---- !u!4 &1357138955 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: -3321919801592875672, guid: 51c4f1b39ca94e44db8509d34d09b170, type: 3}
-  m_PrefabInstance: {fileID: 1357138952}
-  m_PrefabAsset: {fileID: 0}
---- !u!4 &1357138956 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: -3480699329000672020, guid: 51c4f1b39ca94e44db8509d34d09b170, type: 3}
-  m_PrefabInstance: {fileID: 1357138952}
-  m_PrefabAsset: {fileID: 0}
---- !u!4 &1357138957 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 6000407479487422213, guid: 51c4f1b39ca94e44db8509d34d09b170, type: 3}
-  m_PrefabInstance: {fileID: 1357138952}
-  m_PrefabAsset: {fileID: 0}
---- !u!4 &1357138958 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 2563496969622287784, guid: 51c4f1b39ca94e44db8509d34d09b170, type: 3}
-  m_PrefabInstance: {fileID: 1357138952}
-  m_PrefabAsset: {fileID: 0}
---- !u!4 &1357138959 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 1852576806548013000, guid: 51c4f1b39ca94e44db8509d34d09b170, type: 3}
-  m_PrefabInstance: {fileID: 1357138952}
-  m_PrefabAsset: {fileID: 0}
---- !u!4 &1357138960 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: -3432401550182100168, guid: 51c4f1b39ca94e44db8509d34d09b170, type: 3}
-  m_PrefabInstance: {fileID: 1357138952}
-  m_PrefabAsset: {fileID: 0}
---- !u!4 &1357138961 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: -1812909498023395591, guid: 51c4f1b39ca94e44db8509d34d09b170, type: 3}
-  m_PrefabInstance: {fileID: 1357138952}
-  m_PrefabAsset: {fileID: 0}
---- !u!4 &1357138962 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 6502182839619065283, guid: 51c4f1b39ca94e44db8509d34d09b170, type: 3}
-  m_PrefabInstance: {fileID: 1357138952}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1395298450
 PrefabInstance:
   m_ObjectHideFlags: 0
