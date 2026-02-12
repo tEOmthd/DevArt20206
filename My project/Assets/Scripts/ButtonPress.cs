@@ -4,23 +4,9 @@ public class ButtonPress : MonoBehaviour
 {
     public Animator animator;
     public Door door;
+    private bool lastPressed = false;
 
     void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.F))
-        {
-            animator.SetTrigger("Press");
-            if (door != null)
-            {
-                door.OpenDoor();  // méthode à créer dans Door.cs
-            }
-        }
-    }
-}
-/*
-private bool lastPressed = false;
-
-void Update()
 {
     bool primaryButtonPressed = false;
     if (device.TryGetFeatureValue(CommonUsages.primaryButton, out primaryButtonPressed))
@@ -31,5 +17,11 @@ void Update()
         }
         lastPressed = primaryButtonPressed;
     }
-}*/
+}
+   
+}
+
+
+
+
 
