@@ -19,12 +19,19 @@ public class Door : MonoBehaviour
 
     void Update()
     {
+        // Garder E comme test direct
         if (Input.GetKeyDown(KeyCode.E))
         {
-            if (_currentCoroutine != null)
-                StopCoroutine(_currentCoroutine);
-            _currentCoroutine = StartCoroutine(ToggleDoor());
+            OpenDoor();  // maintenant via méthode publique
         }
+    }
+
+    // Méthode publique pour déclencher la porte depuis un autre script
+    public void OpenDoor()
+    {
+        if (_currentCoroutine != null)
+            StopCoroutine(_currentCoroutine);
+        _currentCoroutine = StartCoroutine(ToggleDoor());
     }
 
     private IEnumerator ToggleDoor()
