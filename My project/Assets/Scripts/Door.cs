@@ -17,7 +17,7 @@ public class Door : MonoBehaviour
     }
 
 
-    // Méthode publique pour déclencher la porte depuis un autre script
+    // Méthode publique pour déclencheazer la porte depuis un autre script
    public void OpenDoor()
 {
     if (_currentCoroutine != null)

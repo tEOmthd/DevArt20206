@@ -1,5 +1,7 @@
 using UnityEngine;
+using System.Collections;
 using UnityEngine.Rendering;
+using UnityEngine.XR;
 using UnityEngine.Rendering.Universal;
 
 public class BlueScreenFade : MonoBehaviour
@@ -62,4 +64,34 @@ public class BlueScreenFade : MonoBehaviour
         timer = 0f;
         colorAdjustments.colorFilter.value = initialColor;
     }
+
+    public IEnumerator Flash(float flashDuration = 0.15f, float intensity = 1.5f)
+{
+    float elapsed = 0f;
+
+    Color flashColor = Color.white * intensity;
+
+    // Phase montée
+    while (elapsed < flashDuration)
+    {
+        elapsed += Time.deltaTime;
+        float t = elapsed / flashDuration;
+        colorAdjustments.colorFilter.value = Color.Lerp(initialColor, flashColor, t);
+        yield return null;
+    }
+
+    elapsed = 0f;
+
+    // Phase descente
+    while (elapsed < flashDuration)
+    {
+        elapsed += Time.deltaTime;
+        float t = elapsed / flashDuration;
+        colorAdjustments.colorFilter.value = Color.Lerp(flashColor, initialColor, t);
+        yield return null;
+    }
+
+    colorAdjustments.colorFilter.value = initialColor;
+}
+
 }
