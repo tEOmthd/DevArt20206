@@ -1,27 +1,25 @@
 using UnityEngine;
+using UnityEngine.XR.Interaction.Toolkit;
 
-
-public class LiftCrate : MonoBehaviour
+public class LiftCrate : UnityEngine.XR.Interaction.Toolkit.Interactables.XRGrabInteractable
 {
-    public UnityEngine.XR.Interaction.Toolkit.Interactors.XRBaseInteractor leftHandInteractor;
-    public UnityEngine.XR.Interaction.Toolkit.Interactors.XRBaseInteractor rightHandInteractor;
     void Start()
     {
         
     }
-
-    // Update is called once per frame
-    void Update()
+    public void CheckIfTwoHands()
     {
-        if (leftHandInteractor.hasSelection && rightHandInteractor.hasSelection)
+        if (interactorsSelecting.Count == 2)
         {
-            var leftObject = leftHandInteractor.firstInteractableSelected;
-            var rightObject = rightHandInteractor.firstInteractableSelected;
-
-            if (leftObject == rightObject)
-            {
-                Debug.Log("Les deux mains tiennent le même objet !");
-            }
+            Debug.Log("Deux mains sur l'objet");
+        }
+        else if (interactorsSelecting.Count == 1)
+        {
+            Debug.Log("Une seule main");
+        }
+        else
+        {
+            Debug.Log("Aucune main");
         }
     }
 }
