@@ -8,10 +8,8 @@ public class CloningManager : MonoBehaviour
 {
     [Header("References")]
     public BlueScreenFade blueScreenFade;
-    public Transform xrRig;
-    public Transform head;
-    public Transform leftHand;
-    public Transform rightHand;
+    public Transform xrOrigin; // XR Rig
+    public Transform Camera; // XR Rig
     
     [Header("UI")]
     public TextMeshProUGUI cloningText;
@@ -19,14 +17,20 @@ public class CloningManager : MonoBehaviour
     [Header("Clone")]
     public GameObject clonePrefab;
     
+    [Header("Offsets réglables")]
+    public Vector3 positionOffset;
+    public Vector3 rotationOffsetEuler;
+    
     private bool isCloning = false;
     private List<FrameData> recordedFrames = new List<FrameData>();
-    private Vector3 initialHeadPosition; // 👈 position de la TÊTE au début
+    private Vector3 initialPosition;
+    private Quaternion initialRotation;
     
     void Start()
     {
         cloningText.text = "";
-        initialHeadPosition = head.position;
+        initialPosition = xrOrigin.position;
+        initialRotation = xrOrigin.rotation;
     }
     
     void Update()
@@ -37,10 +41,7 @@ public class CloningManager : MonoBehaviour
         if (leftDevice.TryGetFeatureValue(CommonUsages.primaryButton, out primaryButtonValue) && primaryButtonValue)
         {
             if (!isCloning)
-            {
-                Debug.Log("Début du clonage");
                 StartCoroutine(CloningRoutine());
-            }
         }
     }
     
@@ -52,15 +53,10 @@ public class CloningManager : MonoBehaviour
         yield return StartCoroutine(blueScreenFade.Flash());
         blueScreenFade.StartFade();
         
-        float recordTime = 10f;
+        float recordTime = 5f;
         float timer = 0f;
         int lastDisplayedSecond = Mathf.CeilToInt(recordTime);
-        
-        if (cloningText != null)
-            cloningText.text = $"Clonage... {lastDisplayedSecond} sec restantes";
-        
-        // 👇 On enregistre la position de départ de la tête
-        Vector3 recordingStartHeadPos = head.position;
+        cloningText.text = $"Clonage...\n{lastDisplayedSecond} sec restantes";
         
         while (timer < recordTime)
         {
@@ -71,8 +67,7 @@ public class CloningManager : MonoBehaviour
             if (remainingSeconds != lastDisplayedSecond)
             {
                 lastDisplayedSecond = remainingSeconds;
-                if (cloningText != null)
-                    cloningText.text = $"Clonage...\n{remainingSeconds} sec restantes";
+                cloningText.text = $"Clonage...\n{remainingSeconds} sec restantes";
             }
             
             yield return null;
@@ -81,24 +76,19 @@ public class CloningManager : MonoBehaviour
         yield return StartCoroutine(blueScreenFade.Flash());
         blueScreenFade.ResetFade();
         cloningText.text = "";
-        
         Debug.Log("Enregistrement terminé.");
-        Debug.Log("Nombre total de frames : " + recordedFrames.Count);
-        PrintRecordedData();
         
-        // 👇 Sauvegarde la position actuelle de la tête
-        Vector3 currentHeadPosition = head.position;
+        Vector3 endPosition = xrOrigin.position;
         
-        // 👇 Téléportation du XR Rig pour remettre la tête à sa position initiale
-        Vector3 headOffset = head.position - xrRig.position;
-        xrRig.position = initialHeadPosition - headOffset;
+        xrOrigin.position = initialPosition;
+        xrOrigin.rotation = initialRotation;
         
-        // 👇 Création du clone
-        if (clonePrefab != null)
+        if (clonePrefab != null && recordedFrames.Count > 0)
         {
-            GameObject clone = Instantiate(clonePrefab, currentHeadPosition, Quaternion.identity);
+            // Instancie le clone SANS rotation (Quaternion.identity)
+            GameObject clone = Instantiate(clonePrefab, endPosition, Quaternion.identity);
             CloneReplay replay = clone.AddComponent<CloneReplay>();
-            replay.SetRecording(recordedFrames, recordingStartHeadPos, currentHeadPosition);
+            replay.SetRecording(recordedFrames, positionOffset, rotationOffsetEuler);
         }
         
         isCloning = false;
@@ -108,30 +98,9 @@ public class CloningManager : MonoBehaviour
     {
         FrameData frame = new FrameData
         {
-            headPosition = head.position,
-            headRotation = head.rotation,
-            leftHandPosition = leftHand.position,
-            leftHandRotation = leftHand.rotation,
-            rightHandPosition = rightHand.position,
-            rightHandRotation = rightHand.rotation
+            worldPosition = xrOrigin.position,
+            worldRotation = Camera.rotation
         };
         recordedFrames.Add(frame);
-    }
-    
-    void PrintRecordedData()
-    {
-        if (recordedFrames.Count == 0)
-        {
-            Debug.Log("Aucune frame enregistrée.");
-            return;
-        }
-        
-        FrameData first = recordedFrames[0];
-        Debug.Log("=== PREMIÈRE FRAME ===");
-        Debug.Log("Head Position: " + first.headPosition + " | Rotation: " + first.headRotation.eulerAngles);
-        
-        FrameData last = recordedFrames[recordedFrames.Count - 1];
-        Debug.Log("=== DERNIÈRE FRAME ===");
-        Debug.Log("Head Position: " + last.headPosition + " | Rotation: " + last.headRotation.eulerAngles);
     }
 }
