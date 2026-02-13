@@ -17,24 +17,22 @@ public class CloneReplay : MonoBehaviour
         StartCoroutine(ReplayRoutine());
     }
     
-    IEnumerator ReplayRoutine()
+IEnumerator ReplayRoutine()
+{
+    while (currentFrame < frames.Count)
     {
-        while (currentFrame < frames.Count)
-        {
-            FrameData frame = frames[currentFrame];
-            
-            // 👇 Calcul de l'offset basé sur la position de la tête
-            Vector3 offset = replayStartHeadPos - recordStartHeadPos;
-            
-            // 👇 Position du clone = position enregistrée + offset
-            transform.position = frame.headPosition + offset;
-            transform.rotation = frame.headRotation;
-            
-            currentFrame++;
-            yield return null;
-        }
-        
-        yield return new WaitForSeconds(0.5f);
-        Destroy(gameObject);
+        FrameData frame = frames[currentFrame];
+
+        // Reconvertir les positions locales en world space
+        // en utilisant la position/rotation du clone comme référence
+        transform.position = replayStartHeadPos + frame.headPosition;
+        transform.rotation = frame.headRotation;
+
+        currentFrame++;
+        yield return null;
     }
+
+    yield return new WaitForSeconds(0.5f);
+    Destroy(gameObject);
+}
 }
