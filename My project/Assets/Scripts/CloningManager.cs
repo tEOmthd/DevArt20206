@@ -2,16 +2,20 @@ using UnityEngine;
 using UnityEngine.XR;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro; // 👈 ajouté
 
 public class CloningManager : MonoBehaviour
 {
     [Header("References")]
     public BlueScreenFade blueScreenFade;
 
-    public Transform xrRig;          // XR Origin / Player root
-    public Transform head;           // Camera (CenterEye)
-    public Transform leftHand;       
+    public Transform xrRig;
+    public Transform head;
+    public Transform leftHand;
     public Transform rightHand;
+
+    [Header("UI")]
+    public TextMeshProUGUI cloningText; // 👈 TextMeshPro ajouté
 
     private bool isCloning = false;
     private List<FrameData> recordedFrames = new List<FrameData>();
@@ -37,30 +41,50 @@ public class CloningManager : MonoBehaviour
         recordedFrames.Clear();
 
         yield return StartCoroutine(blueScreenFade.Flash());
-
         blueScreenFade.StartFade();
 
         float recordTime = 10f;
         float timer = 0f;
+        int lastDisplayedSecond = Mathf.CeilToInt(recordTime);
+
+        // Affichage initial
+        if (cloningText != null)
+            cloningText.text = $"Clonage... {lastDisplayedSecond} sec restantes";
 
         while (timer < recordTime)
         {
             RecordFrame();
+
             timer += Time.deltaTime;
+
+            int remainingSeconds = Mathf.CeilToInt(recordTime - timer);
+
+            // Mise à jour uniquement si la seconde change
+            if (remainingSeconds != lastDisplayedSecond)
+            {
+                lastDisplayedSecond = remainingSeconds;
+
+                if (cloningText != null)
+                    cloningText.text = $"Clonage... {remainingSeconds} sec restantes";
+            }
+
             yield return null;
         }
 
         yield return StartCoroutine(blueScreenFade.Flash());
         blueScreenFade.ResetFade();
 
+        // Nettoyage du texte à la fin
+        if (cloningText != null)
+            cloningText.text = "";
+
         Debug.Log("Enregistrement terminé.");
         Debug.Log("Nombre total de frames : " + recordedFrames.Count);
 
-        PrintRecordedData(); // 👈 on affiche les données
+        PrintRecordedData();
 
         isCloning = false;
     }
-
 
     void RecordFrame()
     {
@@ -90,23 +114,12 @@ public class CloningManager : MonoBehaviour
             return;
         }
 
-        // Première frame
         FrameData first = recordedFrames[0];
         Debug.Log("=== PREMIÈRE FRAME ===");
         Debug.Log("Rig Position: " + first.rigPosition + " | Rotation: " + first.rigRotation.eulerAngles);
-        Debug.Log("Head Position: " + first.headPosition + " | Rotation: " + first.headRotation.eulerAngles);
-        Debug.Log("Left Hand Position: " + first.leftHandPosition + " | Rotation: " + first.leftHandRotation.eulerAngles);
-        Debug.Log("Right Hand Position: " + first.rightHandPosition + " | Rotation: " + first.rightHandRotation.eulerAngles);
 
-        // Dernière frame
         FrameData last = recordedFrames[recordedFrames.Count - 1];
         Debug.Log("=== DERNIÈRE FRAME ===");
         Debug.Log("Rig Position: " + last.rigPosition + " | Rotation: " + last.rigRotation.eulerAngles);
-        Debug.Log("Head Position: " + last.headPosition + " | Rotation: " + last.headRotation.eulerAngles);
-        Debug.Log("Left Hand Position: " + last.leftHandPosition + " | Rotation: " + last.leftHandRotation.eulerAngles);
-        Debug.Log("Right Hand Position: " + last.rightHandPosition + " | Rotation: " + last.rightHandRotation.eulerAngles);
     }
-
-
-
 }
