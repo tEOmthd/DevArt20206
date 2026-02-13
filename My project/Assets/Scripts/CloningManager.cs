@@ -60,6 +60,9 @@ public class CloningManager : MonoBehaviour
 
     IEnumerator CloningRoutine()
     {
+        initialPosition = xrOrigin.position;
+        initialRotation = xrOrigin.rotation;
+        
         // Joue le son du flash
         if (flashClip != null)
             audioSource.PlayOneShot(flashClip);
