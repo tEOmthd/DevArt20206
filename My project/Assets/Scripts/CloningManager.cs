@@ -21,16 +21,29 @@ public class CloningManager : MonoBehaviour
     public Vector3 positionOffset;
     public Vector3 rotationOffsetEuler;
     
-    private bool isCloning = false;
+    public bool isCloning = false;
     private List<FrameData> recordedFrames = new List<FrameData>();
     private Vector3 initialPosition;
     private Quaternion initialRotation;
+
+    public AudioClip flashClip;       // Son qui joue au début (flash)
+    public AudioClip cloningClip;      // Son qui joue pendant le clonage
+    private AudioSource audioSource;  // Source audio pour jouer les sons
+
+    public TutorialManager tutomanager;
     
     void Start()
     {
         cloningText.text = "";
         initialPosition = xrOrigin.position;
         initialRotation = xrOrigin.rotation;
+
+        // Crée un AudioSource si pas déjà attaché
+        audioSource = gameObject.GetComponent<AudioSource>();
+        if (audioSource == null)
+            audioSource = gameObject.AddComponent<AudioSource>();
+
+        audioSource.playOnAwake = false;
     }
 
     void Update()
@@ -47,13 +60,26 @@ public class CloningManager : MonoBehaviour
 
     IEnumerator CloningRoutine()
     {
+        // Joue le son du flash
+        if (flashClip != null)
+            audioSource.PlayOneShot(flashClip);
+
         isCloning = true;
         recordedFrames.Clear();
 
         yield return StartCoroutine(blueScreenFade.Flash());
         blueScreenFade.StartFade();
+
+        StartCoroutine(TutorialHandler());
+
+        if (cloningClip != null)
+        {
+            audioSource.clip = cloningClip;
+            audioSource.loop = true;
+            audioSource.Play();
+        }
         
-        float recordTime = 5f;
+        float recordTime = 10f;
         float timer = 0f;
         int lastDisplayedSecond = Mathf.CeilToInt(recordTime);
         cloningText.text = $"Clonage...\n{lastDisplayedSecond} sec restantes";
@@ -91,6 +117,13 @@ public class CloningManager : MonoBehaviour
             replay.SetRecording(recordedFrames, positionOffset, rotationOffsetEuler);
         }
 
+        // Stoppe le son de clonage
+        if (audioSource.clip == cloningClip)
+        {
+            audioSource.Stop();
+            audioSource.loop = false;
+        }
+
         isCloning = false;
     }
 
@@ -102,5 +135,15 @@ public class CloningManager : MonoBehaviour
             worldRotation = xrOrigin.rotation
         };
         recordedFrames.Add(frame);
+    }
+
+    IEnumerator TutorialHandler()
+    {
+        yield return new WaitForSeconds(10.0f);
+        if(tutomanager.currentStepIndex == 0)
+            tutomanager.CompleteStep();
+        yield return new WaitForSeconds(10.0f);
+        if(tutomanager.currentStepIndex == 1)
+                tutomanager.CompleteStep();
     }
 }

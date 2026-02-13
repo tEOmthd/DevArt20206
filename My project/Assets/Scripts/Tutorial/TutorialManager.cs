@@ -13,7 +13,7 @@ public class TutorialManager : MonoBehaviour
 {
     public List<TutorialStep> steps = new List<TutorialStep>();
     public TMP_Text uiText; // Remplace Text par TMP_Text
-    private int currentStepIndex = 0;
+    public int currentStepIndex = 0;
 
     void Start()
     {
