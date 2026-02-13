@@ -168,8 +168,8 @@ MonoBehaviour:
   xrOrigin: {fileID: 771725845}
   Camera: {fileID: 227967724}
   cloningText: {fileID: 1709154645}
-  clonePrefab: {fileID: 5026408521169113720, guid: 8e1ee33bc7616dc478c1f8179eec4575, type: 3}
-  positionOffset: {x: -3.7, y: -1.55, z: 19}
+  clonePrefab: {fileID: 2259951768819498117, guid: affbb1d7ac893384993524aa0eeb6ec4, type: 3}
+  positionOffset: {x: 0, y: 0, z: 0}
   rotationOffsetEuler: {x: 0, y: 0, z: 0}
 --- !u!114 &207170144
 MonoBehaviour:
