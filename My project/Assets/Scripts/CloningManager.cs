@@ -99,7 +99,7 @@ public class CloningManager : MonoBehaviour
         FrameData frame = new FrameData
         {
             worldPosition = xrOrigin.position,
-            worldRotation = Camera.rotation
+            worldRotation = xrOrigin.rotation
         };
         recordedFrames.Add(frame);
     }
