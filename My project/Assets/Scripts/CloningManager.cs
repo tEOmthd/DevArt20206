@@ -13,7 +13,7 @@ public class CloningManager : MonoBehaviour
     
     [Header("UI")]
     public TextMeshProUGUI cloningText;
-    
+
     [Header("Clone")]
     public GameObject clonePrefab;
     
@@ -32,24 +32,24 @@ public class CloningManager : MonoBehaviour
         initialPosition = xrOrigin.position;
         initialRotation = xrOrigin.rotation;
     }
-    
+
     void Update()
     {
         InputDevice leftDevice = InputDevices.GetDeviceAtXRNode(XRNode.LeftHand);
         bool primaryButtonValue;
-        
+
         if (leftDevice.TryGetFeatureValue(CommonUsages.primaryButton, out primaryButtonValue) && primaryButtonValue)
         {
             if (!isCloning)
                 StartCoroutine(CloningRoutine());
         }
     }
-    
+
     IEnumerator CloningRoutine()
     {
         isCloning = true;
         recordedFrames.Clear();
-        
+
         yield return StartCoroutine(blueScreenFade.Flash());
         blueScreenFade.StartFade();
         
@@ -62,17 +62,17 @@ public class CloningManager : MonoBehaviour
         {
             RecordFrame();
             timer += Time.deltaTime;
-            
+
             int remainingSeconds = Mathf.CeilToInt(recordTime - timer);
             if (remainingSeconds != lastDisplayedSecond)
             {
                 lastDisplayedSecond = remainingSeconds;
                 cloningText.text = $"Clonage...\n{remainingSeconds} sec restantes";
             }
-            
+
             yield return null;
         }
-        
+
         yield return StartCoroutine(blueScreenFade.Flash());
         blueScreenFade.ResetFade();
         cloningText.text = "";
@@ -90,10 +90,10 @@ public class CloningManager : MonoBehaviour
             CloneReplay replay = clone.AddComponent<CloneReplay>();
             replay.SetRecording(recordedFrames, positionOffset, rotationOffsetEuler);
         }
-        
+
         isCloning = false;
     }
-    
+
     void RecordFrame()
     {
         FrameData frame = new FrameData
