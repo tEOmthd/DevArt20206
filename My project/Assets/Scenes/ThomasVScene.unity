@@ -129,6 +129,7 @@ GameObject:
   m_Component:
   - component: {fileID: 207170142}
   - component: {fileID: 207170143}
+  - component: {fileID: 207170144}
   m_Layer: 0
   m_Name: CloningManager
   m_TagString: Untagged
@@ -164,12 +165,25 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CloningManager
   blueScreenFade: {fileID: 1607558719}
-  xrRig: {fileID: 771725845}
-  head: {fileID: 227967724}
-  leftHand: {fileID: 1848834218}
-  rightHand: {fileID: 831086389}
+  xrOrigin: {fileID: 771725845}
+  Camera: {fileID: 227967724}
   cloningText: {fileID: 1709154645}
   clonePrefab: {fileID: 5026408521169113720, guid: 8e1ee33bc7616dc478c1f8179eec4575, type: 3}
+  positionOffset: {x: -3.7, y: -1.55, z: 19}
+  rotationOffsetEuler: {x: 0, y: 0, z: 0}
+--- !u!114 &207170144
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 207170140}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0a78cacf6ab0a646a9c9ef7e46880c0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::test
+  testtr: {fileID: 227967724}
 --- !u!4 &227967724 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1767192434, guid: f6336ac4ac8b4d34bc5072418cdc62a0, type: 3}
@@ -645,11 +659,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 1.96}
   m_SizeDelta: {x: 5, y: 2.5}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!4 &831086389 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 1670256625, guid: f6336ac4ac8b4d34bc5072418cdc62a0, type: 3}
-  m_PrefabInstance: {fileID: 1267681461}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1267681461
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1209,11 +1218,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1709154643}
   m_CullTransparentMesh: 1
---- !u!4 &1848834218 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 202364688, guid: f6336ac4ac8b4d34bc5072418cdc62a0, type: 3}
-  m_PrefabInstance: {fileID: 1267681461}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
