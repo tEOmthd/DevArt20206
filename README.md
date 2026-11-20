@@ -41,4 +41,4 @@ Projet réalisé en équipe de 4 en 48h :
 - Téo Mathiaud
 - Thomas Salvador
 - Thomas Vansteenwinckel
-- Adam Georges
+- Lefevre Samuel
